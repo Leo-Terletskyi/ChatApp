@@ -11,7 +11,8 @@ class User(AbstractUser):
     birthday = models.DateField(null=True, blank=True)
     phone = models.CharField('phone number', max_length=14, null=True, blank=True)
     following = models.ManyToManyField('self', blank=True, symmetrical=False, related_name='followers')
-    
+    is_online = models.BooleanField(default=False)
+
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
@@ -30,3 +31,7 @@ class User(AbstractUser):
     @property
     def following_count(self):
         return self.following.all().count()
+
+    def set_online(self, online=True):
+        self.is_online = online
+        self.save()

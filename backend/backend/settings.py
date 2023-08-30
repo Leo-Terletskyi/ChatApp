@@ -159,7 +159,7 @@ REST_FRAMEWORK = {
 
 # versatileimagefield config:
 VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
-    'product_image': [
+    'user_photo': [
         ('full_size', 'url'),
         ('thumbnail', 'thumbnail__100x100'),
         ('medium_square_thumbnail', 'thumbnail__500x500'),

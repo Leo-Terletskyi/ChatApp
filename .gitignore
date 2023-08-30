@@ -1,3 +1,5 @@
+backend/media/
+
 # IDE, npm ...
 .idea/
 .DS_Store
