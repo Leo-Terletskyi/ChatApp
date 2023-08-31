@@ -17,13 +17,6 @@
         </div>
 
         <div class="field mb-4">
-          <label class="label">Email</label>
-          <div class="control">
-            <input class="input" v-model="email" type="email" placeholder="">
-          </div>
-        </div>
-
-        <div class="field mb-4">
           <label class="label">Password</label>
           <div class="control">
             <input class="input" v-model="password" type="password" placeholder="">
@@ -39,11 +32,20 @@
         <button type="submit" class="btn-grad-lightgreen auth-form-btn-style mx-0 is-pulled-right">Submit</button>
 
       </form>
+
+      <router-link to="/sign-up">
+        <button type="button" class="btn-grad-lightblue auth-form-btn-style mx-0 is-pulled-left">
+          New user? Register here.
+        </button>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import {toast} from "bulma-toast";
+
 export default {
   name: "LogIn",
   data() {
@@ -55,10 +57,13 @@ export default {
     }
   },
   mounted() {
-    document.title = 'Sign up'
+    document.title = 'Log in'
   },
   methods: {
-    LogInSubmit() {
+    async LogInSubmit() {
+      axios.defaults.headers.common['Authorization'] = ""
+      localStorage.removeItem("token")
+
       this.errors = []
       if (this.username === '') {
         this.errors.push('The username is missing')
@@ -73,7 +78,41 @@ export default {
         }
         console.log(formData)
 
-        this.$router.push('/')
+        await axios
+            .post('http://127.0.0.1:8000/api/v1/auth/token/login/', formData)
+            .then(response => {
+              const token = response.data.auth_token
+
+              this.$store.commit('setToken', token)
+              this.$store.commit('setUsername', formData.username)
+
+              axios.defaults.headers.common['Authorization'] = "Token " + token
+
+              toast({
+                message: 'You have successfully logged in',
+                type: 'is-success',
+                dismissible: true,
+                pauseOnHover: true,
+                duration: 1500,
+                position: 'bottom-right'
+              })
+
+              setTimeout(() => {
+                this.$router.push('/')
+              }, 1500)
+
+              this.$router.push('/')
+            })
+            .catch(error => {
+              if (error.response) {
+                for (const property in error.response.data) {
+                  this.errors.push(`${property}: ${error.response.data[property]}`)
+                }
+              } else {
+                this.errors.push('Something went wrong. Please try again')
+                console.log(JSON.stringify(error))
+              }
+            })
       }
     }
   }

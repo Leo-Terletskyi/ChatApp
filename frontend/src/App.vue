@@ -1,4 +1,6 @@
 <script>
+import axios from "axios";
+import {toast} from "bulma-toast";
 
 export default {
   data() {
@@ -6,9 +8,41 @@ export default {
       isMenuOpen: false
     }
   },
+  beforeCreate() {
+    this.$store.commit('initializeStore')
+    const token = this.$store.state.token
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = "Token " + token
+    } else {
+      axios.defaults.headers.common['Authorization'] = ""
+    }
+  },
   methods: {
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen
+    },
+    logOut() {
+      axios.post('http://127.0.0.1:8000/api/v1/auth/token/logout/')
+          .then(() => {
+            this.$store.commit('removeUsername')
+            this.$store.commit('removeToken')
+
+            toast({
+                message: 'You have successfully logged out',
+                type: 'is-success',
+                dismissible: true,
+                pauseOnHover: true,
+                duration: 1500,
+                position: 'bottom-right'
+              })
+
+              setTimeout(() => {
+                this.$router.push('logIn')
+              }, 1500)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
     }
   }
 }
@@ -61,7 +95,7 @@ export default {
             </template>
 
             <template v-else>
-              <button class="btn-grad-darkred auth-form-btn-style">Logout</button>
+              <button class="btn-grad-darkred auth-form-btn-style" @click="logOut">Logout</button>
             </template>
           </div>
         </div>

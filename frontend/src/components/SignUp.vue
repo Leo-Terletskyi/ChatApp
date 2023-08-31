@@ -46,11 +46,19 @@
         <button type="submit" class="btn-grad-lightgreen auth-form-btn-style mx-0 is-pulled-right">Submit</button>
 
       </form>
+      <router-link to="/log-in">
+        <button type="button" class="btn-grad-lightblue auth-form-btn-style mx-0 is-pulled-left">
+          Already have an account? Log in here.
+        </button>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import {toast} from "bulma-toast";
+
 export default {
   name: "SignUp",
   data() {
@@ -66,6 +74,37 @@ export default {
     document.title = 'Sign up'
   },
   methods: {
+    async signUpRequest(formData) {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/v1/auth/users/', formData);
+
+        toast({
+          message: 'Account created, please log in',
+          type: 'is-success',
+          dismissible: true,
+          pauseOnHover: true,
+          duration: 1500,
+          position: 'bottom-right'
+        })
+
+        setTimeout(() => {
+          this.$router.push('/log-in')
+        }, 1500)
+
+      } catch (error) {
+        console.log(error)
+        if (error.response) {
+          for (const property in error.response.data) {
+            this.errors.push(`${property}: ${error.response.data[property]}`)
+          }
+          console.log(JSON.stringify(error.response.data))
+        } else if (error.message) {
+          this.errors.push('Something went wrong. Please try again')
+          console.log(JSON.stringify(error))
+        }
+      }
+    },
+
     signUpSubmit() {
       this.errors = []
       if (this.username === '') {
@@ -85,7 +124,7 @@ export default {
         }
         console.log(formData)
 
-        this.$router.push('/log-in')
+        this.signUpRequest(formData)
       }
     }
   }

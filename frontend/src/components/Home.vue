@@ -53,7 +53,7 @@
         <div class="main-content">
           <div class="card-header has-background-phoenix-start">
             <p class="card-header-title has-text-white">
-              Contacts
+              Chat
             </p>
           </div>
           <div class="card main-card flex-body">
