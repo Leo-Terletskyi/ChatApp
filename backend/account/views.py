@@ -9,7 +9,7 @@ class UserListAPIView(generics.ListAPIView):
     serializer_class = UserSerializer
 
 
-class UserRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
+class UserRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'username'

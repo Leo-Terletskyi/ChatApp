@@ -38,7 +38,7 @@ export default {
 
               setTimeout(() => {
                 this.$router.push('logIn')
-              }, 1500)
+              }, 500)
           })
           .catch((err) => {
             console.log(err)
@@ -89,7 +89,7 @@ export default {
               <router-link to="/sign-up" class="btn-grad-lightgreen">
                 <strong>Sign up</strong>
               </router-link>
-              <router-link to="/log-in" class="btn-grad-lightblue">
+              <router-link to="/login" class="btn-grad-lightblue">
                 Log in
               </router-link>
             </template>

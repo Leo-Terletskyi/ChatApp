@@ -88,7 +88,7 @@ export default {
         })
 
         setTimeout(() => {
-          this.$router.push('/log-in')
+          this.$router.push('/login')
         }, 1500)
 
       } catch (error) {

@@ -194,3 +194,19 @@ body {
     border-bottom-right-radius: 0;
     background: lightgreen;
 }
+
+.has-text-darkorange {
+    color: darkorange;
+}
+
+.has-text-lightskyblue {
+    color: lightskyblue;
+}
+
+.has-shadow-darkgray {
+    text-shadow: 1px -1px darkgray;
+}
+
+.has-fz-20 {
+    font-size: 20px;
+}

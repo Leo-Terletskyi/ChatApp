@@ -4,6 +4,6 @@ from . import views
 
 urlpatterns = [
     path('', views.UserListAPIView.as_view()),
-    path('<str:username>/', views.UserRetrieveAPIView.as_view()),
+    path('<str:username>/', views.UserRetrieveUpdateDestroyAPIView.as_view()),
     
 ]

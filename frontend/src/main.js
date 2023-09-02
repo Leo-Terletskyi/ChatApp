@@ -37,7 +37,7 @@ const router = createRouter({
             component: SignUp
         },
         {
-            path: '/log-in',
+            path: '/login',
             name: 'logIn',
             component: LogIn
         },
@@ -100,7 +100,7 @@ const store = createStore({
         removeUsername(state) {
             localStorage.setItem('username', 'anonymous')
             state.username = 'anonymous'
-        }
+        },
     },
     actions: {},
     modules: {}
