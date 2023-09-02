@@ -32,6 +32,20 @@
 
               <form @submit.prevent="updateProfile">
                 <div class="field my-5">
+                  <label class="label">First name</label>
+                  <div class="control">
+                    <input class="input" type="text" :placeholder=user.first_name  v-model="formData.first_name">
+                  </div>
+                </div>
+
+                <div class="field my-5">
+                  <label class="label">Last name</label>
+                  <div class="control">
+                    <input class="input" type="text" :placeholder=user.last_name  v-model="formData.last_name">
+                  </div>
+                </div>
+
+                <div class="field my-5">
                   <label class="label">Email</label>
                   <div class="control">
                     <input class="input" type="email" :placeholder=user.email  v-model="formData.email">
@@ -97,6 +111,8 @@ export default {
     return {
       user: [],
       formData: {
+        first_name: '',
+        last_name: '',
         email: '',
         photo: null,
         birthday: '',
@@ -140,6 +156,12 @@ export default {
     async updateProfile() {
       const formData = new FormData()
 
+      if (this.formData.first_name) {
+        formData.append('first_name', this.formData.first_name);
+      }
+      if (this.formData.last_name) {
+        formData.append('last_name', this.formData.last_name);
+      }
       if (this.formData.email) {
         formData.append('email', this.formData.email);
       }
@@ -157,6 +179,12 @@ export default {
         headers: {'Content-Type': 'multipart/form-data'}
       })
           .then(() => {
+            this.formData.first_name = ''
+            this.formData.last_name = ''
+            this.formData.email = ''
+            this.formData.photo = null
+            this.formData.birthday = ''
+            this.formData.phone = ''
             this.getUser()
           })
           .catch((err) => {

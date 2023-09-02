@@ -76,7 +76,6 @@ export default {
           username: this.username,
           password: this.password
         }
-        console.log(formData)
 
         await axios
             .post('http://127.0.0.1:8000/api/v1/auth/token/login/', formData)
