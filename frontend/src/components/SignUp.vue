@@ -88,7 +88,7 @@ export default {
         })
 
         setTimeout(() => {
-          this.$router.push('/login')
+          this.$router.push('logIn')
         }, 1500)
 
       } catch (error) {
@@ -122,7 +122,6 @@ export default {
           email: this.email,
           password: this.password1
         }
-        console.log(formData)
 
         this.signUpRequest(formData)
       }

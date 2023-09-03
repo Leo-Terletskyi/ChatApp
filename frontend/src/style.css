@@ -17,7 +17,53 @@ body {
     min-height: 100%;
 }
 
+.has-min-height-1 {
+    min-height: 1%;
+}
+
+
+.has-min-height-40 {
+    min-height: 40%;
+}
+
+.has-max-height-40 {
+    max-height: 40%;
+}
+
+.has-height-40 {
+    height: 40%;
+}
+
+.has-align-items-start {
+    align-items: start;
+}
+
+.has-align-items-stretch {
+    align-items: stretch;
+}
+
+.has-flex-1-0-auto {
+    flex: 1 0 auto;
+}
+
+.has-invisible-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.has-invisible-scroll::-webkit-scrollbar {
+    display: none;
+}
+
 .card {
+    overflow: auto;
+}
+
+.is-wrap {
+    flex-wrap: wrap;
+}
+
+.is-overflow-auto {
     overflow: auto;
 }
 
@@ -122,6 +168,28 @@ body {
 }
 
 .btn-grad-lightblue:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+
+.btn-grad-rude {
+    background-image: linear-gradient(to right, #FF512F 0%, #F09819 51%, #FF512F 100%);
+    margin: 8px;
+    padding: 8px 35px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border: none;
+    border-radius: 10px;
+    display: block;
+}
+
+.btn-grad-rude:hover {
     background-position: right center; /* change the direction of the change here */
     color: #fff;
     text-decoration: none;

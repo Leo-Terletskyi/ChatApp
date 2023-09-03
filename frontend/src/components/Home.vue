@@ -8,7 +8,7 @@
               Contacts
             </p>
           </div>
-          <div class="card main-card flex-body">
+          <div class="card main-card flex-body has-invisible-scroll">
             <div class="card-content main-card main-content flex-body has-height-100 p-2">
               <div v-for="friend in friends" :key="friend.id">
                 <div class="box p-1 my-2">
@@ -56,7 +56,7 @@
               Chat
             </p>
           </div>
-          <div class="card main-card flex-body">
+          <div class="card main-card flex-body has-invisible-scroll">
             <div class="card-content main-card flex-body main-content has-height-100 p-2">
               <div class="columns is-mobile">
                 <div class="column is-half">
@@ -134,6 +134,9 @@ export default {
         {id: 3, user: 'third_user', online: false},
         {id: 4, user: 'fourth_user', online: false},
         {id: 5, user: 'fifth_user', online: false},
+
+      ],
+      pass: [
         {id: 6, user: 'first_user', online: true},
         {id: 7, user: 'second_user', online: true},
         {id: 8, user: 'third_user', online: false},

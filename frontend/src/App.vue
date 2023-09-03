@@ -28,17 +28,17 @@ export default {
             this.$store.commit('removeToken')
 
             toast({
-                message: 'You have successfully logged out',
-                type: 'is-success',
-                dismissible: true,
-                pauseOnHover: true,
-                duration: 1500,
-                position: 'bottom-right'
-              })
+              message: 'You have successfully logged out',
+              type: 'is-success',
+              dismissible: true,
+              pauseOnHover: true,
+              duration: 1500,
+              position: 'bottom-right'
+            })
 
-              setTimeout(() => {
-                this.$router.push('logIn')
-              }, 500)
+            setTimeout(() => {
+              this.$router.push('logIn')
+            }, 500)
           })
           .catch((err) => {
             console.log(err)
@@ -70,15 +70,19 @@ export default {
           <span class="ml-2">Profile</span>
         </router-link>
 
-        <div class="field has-addons navbar-item mr-3">
-          <div class="control">
-            <input class="input" type="text" placeholder="User search">
-          </div>
-          <div class="control">
-            <a class="button has-background-orange">
-              <font-awesome-icon icon="search"/>
-            </a>
-          </div>
+        <div class="navbar-item mr-3">
+          <form action="/user-search" method="get">
+            <div class="field has-addons">
+              <div class="control">
+                <input class="input" type="text" placeholder="User search" name="query">
+              </div>
+              <div class="control">
+                <button class="button has-background-orange" type="submit">
+                  <font-awesome-icon icon="search"/>
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -95,7 +99,7 @@ export default {
             </template>
 
             <template v-else>
-              <button class="btn-grad-darkred auth-form-btn-style" @click="logOut">Logout</button>
+              <button class="btn-grad-rude auth-form-btn-style" @click="logOut">Logout</button>
             </template>
           </div>
         </div>

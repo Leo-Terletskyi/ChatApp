@@ -97,10 +97,9 @@ export default {
               })
 
               setTimeout(() => {
-                this.$router.push('/')
+                this.$router.push('profile')
               }, 1500)
 
-              this.$router.push('/')
             })
             .catch(error => {
               if (error.response) {
