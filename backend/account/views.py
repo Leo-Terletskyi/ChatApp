@@ -60,6 +60,15 @@ class UserUnfollowView(generics.CreateAPIView):
             return Response({'detail': 'You cannot follow yourself.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UserContactManagementListAPIView(generics.ListAPIView):
+    serializer_class = UserSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        queryset = User.objects.filter(following=user)
+        return queryset
+
+
 @api_view(['POST'])
 def search_users(request):
     query = request.data.get('query', '')

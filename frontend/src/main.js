@@ -5,9 +5,9 @@ import {createRouter, createWebHistory} from "vue-router";
 
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
-import {faUser, faSearch, faUserPlus, faUserMinus} from '@fortawesome/free-solid-svg-icons'
+import {faUser, faSearch, faUserPlus, faUserMinus, faAddressBook} from '@fortawesome/free-solid-svg-icons'
 
-library.add(faUser, faSearch, faUserPlus, faUserMinus)
+library.add(faUser, faSearch, faUserPlus, faUserMinus, faAddressBook)
 
 
 import 'bulma/css/bulma.css'
@@ -18,6 +18,7 @@ import UserProfile from "./components/UserProfile.vue";
 import SignUp from "./components/SignUp.vue";
 import LogIn from "./components/LogIn.vue";
 import UserSearch from "./components/UserSearch.vue";
+import ContactManagement from "./components/ContactManagement.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -46,6 +47,11 @@ const router = createRouter({
             path: '/user-search',
             name: 'userSearch',
             component: UserSearch
+        },
+        {
+            path: '/contact-management',
+            name: 'contactManagement',
+            component: ContactManagement
         }
     ]
 })

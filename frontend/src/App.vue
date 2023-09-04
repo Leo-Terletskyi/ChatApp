@@ -70,6 +70,13 @@ export default {
           <span class="ml-2">Profile</span>
         </router-link>
 
+        <router-link to="/contact-management" class="navbar-item mr-3">
+          <span class="icon is-small">
+            <font-awesome-icon icon="fa-solid fa-address-book" />
+          </span>
+          <span class="ml-2">Contact management</span>
+        </router-link>
+
         <div class="navbar-item mr-3">
           <form action="/user-search" method="get">
             <div class="field has-addons">
