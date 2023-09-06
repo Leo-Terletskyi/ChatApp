@@ -69,6 +69,15 @@ class UserContactManagementListAPIView(generics.ListAPIView):
         return queryset
 
 
+class UserContactListAPIView(generics.ListAPIView):
+    serializer_class = UserSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        queryset = User.objects.filter(following=user, followers=user)
+        return queryset
+
+
 @api_view(['POST'])
 def search_users(request):
     query = request.data.get('query', '')

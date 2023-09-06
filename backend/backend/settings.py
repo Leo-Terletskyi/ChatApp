@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'djoser',
     'versatileimagefield',
     'account',
+    'room',
     
 ]
 

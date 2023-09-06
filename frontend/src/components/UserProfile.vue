@@ -15,12 +15,12 @@
           </div>
           <div class="card main-card flex-body">
             <div class="card-content main-card flex-body main-content has-height-100 p-2">
-              <figure class="image is-128x128" v-if="!user.photo">
-                <img src="https://bulma.io/images/placeholders/128x128.png">
+              <figure class="image is-128x128" v-if=user.photo>
+                <img :src=user.photo alt="">
               </figure>
 
               <figure class="image is-128x128" v-else>
-                <img :src=user.photo>
+                <img src="../assets/no-no-user.jpg" alt="">
               </figure>
 
               <div class="field mt-5 mb-2">
