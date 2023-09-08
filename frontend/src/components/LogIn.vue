@@ -87,6 +87,8 @@ export default {
 
               axios.defaults.headers.common['Authorization'] = "Token " + token
 
+              this.setUserOnline(true)
+
               toast({
                 message: 'You have successfully logged in',
                 type: 'is-success',
@@ -112,7 +114,18 @@ export default {
               }
             })
       }
-    }
+    },
+    async setUserOnline(isOnline = false) {
+      try {
+        await axios.patch(`http://127.0.0.1:8000/api/v1/account/${this.$store.state.username}/`, {is_online: isOnline})
+            .then((response) => {
+              console.log(response)
+            })
+      } catch (error) {
+        console.error('Failed to update online status:', error);
+      }
+    },
+
   }
 }
 </script>

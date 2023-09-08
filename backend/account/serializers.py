@@ -23,3 +23,8 @@ class UserSerializer(serializers.ModelSerializer):
             'followers'
         ]
 
+
+class UserContactStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'is_online']

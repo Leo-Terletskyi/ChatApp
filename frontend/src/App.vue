@@ -17,12 +17,32 @@ export default {
       axios.defaults.headers.common['Authorization'] = ""
     }
   },
+  created() {
+    if (this.$store.state.token) {
+      this.setUserOnline(true)
+      window.onbeforeunload = (e) => {
+        // e.preventDefault()
+        this.setUserOnline(false)
+      }
+    }
+  },
   methods: {
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen
     },
-    logOut() {
-      axios.post('http://127.0.0.1:8000/api/v1/auth/token/logout/')
+    async setUserOnline(isOnline = false) {
+      try {
+        await axios.patch(`http://127.0.0.1:8000/api/v1/account/${this.$store.state.username}/`, {is_online: isOnline})
+            .then(() => {
+            })
+      } catch (error) {
+        console.error('Failed to update online status:', error);
+      }
+    },
+    async logOut() {
+      await this.setUserOnline(false)
+
+      await axios.post('http://127.0.0.1:8000/api/v1/auth/token/logout/')
           .then(() => {
             this.$store.commit('removeUsername')
             this.$store.commit('removeToken')
@@ -72,7 +92,7 @@ export default {
 
         <router-link to="/contact-management" class="navbar-item mr-3">
           <span class="icon is-small">
-            <font-awesome-icon icon="fa-solid fa-address-book" />
+            <font-awesome-icon icon="fa-solid fa-address-book"/>
           </span>
           <span class="ml-2">Contact management</span>
         </router-link>

@@ -22,7 +22,9 @@
                     <div class="media-content pt-1">
                       <div class="content">
                         <p>
-                          <strong>@{{ contact.username }}</strong> <span class="tag is-success is-pulled-right">Online</span>
+                          <strong>@{{ contact.username }}</strong>
+                          <span class="tag is-success is-pulled-right" v-if="contact.is_online">Online</span>
+                          <span class="tag is-danger is-pulled-right" v-else>Offline</span>
                         </p>
                       </div>
                     </div>
@@ -128,6 +130,11 @@ export default {
   },
   async mounted() {
     await this.getContacts()
+    if (this.contacts) {
+      setInterval(() => {
+        this.getContactsOnlineStatus()
+      }, 120000)
+    }
   },
   methods: {
     beforeWebsocket(user2_username) {
@@ -203,6 +210,22 @@ export default {
             } else {
               return []
             }
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+    },
+    async getContactsOnlineStatus() {
+      await axios.get('http://127.0.0.1:8000/api/v1/account/contacts/online-status/')
+          .then((response) => {
+            const statuses = response.data
+            this.contacts.forEach((contact) => {
+              statuses.forEach((status) => {
+                if (contact.id === status.id) {
+                  contact.is_online = status.is_online
+                }
+              })
+            })
           })
           .catch((error) => {
             console.log(error)

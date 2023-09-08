@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import User
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserContactStatusSerializer
 
 
 class UserListAPIView(generics.ListAPIView):
@@ -76,6 +76,10 @@ class UserContactListAPIView(generics.ListAPIView):
         user = self.request.user
         queryset = User.objects.filter(following=user, followers=user)
         return queryset
+
+
+class UserContactStatusListAPIView(UserContactListAPIView):
+    serializer_class = UserContactStatusSerializer
 
 
 @api_view(['POST'])
