@@ -18,7 +18,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         query_params = parse_qs(self.scope['query_string'].decode('utf-8'))
         self.user2 = query_params.get('user2', [])[0]
-        print(self.user2)
         self.chat_room = await self.get_or_create_room()
         
         await self.channel_layer.group_add(
@@ -65,19 +64,18 @@ class ChatConsumer(AsyncWebsocketConsumer):
     
     @sync_to_async
     def save_message(self, username, room, message):
-        print(username, message, room)
-        sender = User.objects.get(username=username)
-        room = Room.objects.get(name=room)
+        sender = User.objects.prefetch_related('followers', 'following').get(username=username)
+        room = Room.objects.prefetch_related('users').get(name=room)
         
         Message.objects.create(sender=sender, room=room, message=message)
     
     @sync_to_async
     def get_or_create_room(self):
         try:
-            return Room.objects.get(name=self.room_name)
+            return Room.objects.prefetch_related('users').get(name=self.room_name)
         except ObjectDoesNotExist:
             room = Room.objects.create(name=self.room_name)
-            user = User.objects.get(username=self.scope['user'])
-            user2 = User.objects.get(username=self.user2)
+            user = User.objects.prefetch_related('followers', 'following').get(username=self.scope['user'])
+            user2 = User.objects.prefetch_related('followers', 'following').get(username=self.user2)
             room.users.add(user, user2)
         return room

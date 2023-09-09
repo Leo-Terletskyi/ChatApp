@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Message, Room
+from .models import Message
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -8,11 +8,3 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ['id', 'sender', 'message', 'timestamp']
-
-
-class RoomSerializer(serializers.ModelSerializer):
-    messages = MessageSerializer(many=True)
-
-    class Meta:
-        model = Room
-        fields = ['id', 'name', 'messages']

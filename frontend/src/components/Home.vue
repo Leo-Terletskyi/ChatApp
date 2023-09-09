@@ -215,7 +215,7 @@ export default {
     async getRoomMessages(roomName) {
       await axios.get(`http://127.0.0.1:8000/api/v1/room/${roomName}/`)
           .then((response) => {
-            const messages = response.data.messages
+            const messages = response.data
             if (messages) {
               const sortedMessages = messages.slice().sort((a, b) => a.id - b.id)
               sortedMessages.forEach((message) => {

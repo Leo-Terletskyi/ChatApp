@@ -138,7 +138,7 @@ export default {
 
   methods: {
     async getUser() {
-      await axios.get(`http://127.0.0.1:8000/api/v1/account/${this.getUsername}/`)
+      await axios.get(`http://127.0.0.1:8000/api/v1/account/${this.getUsername}/profile/`)
           .then((response) => {
             this.user = response.data
             this.user.photo = response.data.photo.medium_square_crop
@@ -175,7 +175,7 @@ export default {
         formData.append('photo', this.formData.photo);
       }
 
-      await axios.patch(`http://127.0.0.1:8000/api/v1/account/${this.getUsername}/`, formData, {
+      await axios.patch(`http://127.0.0.1:8000/api/v1/account/${this.getUsername}/update/`, formData, {
         headers: {'Content-Type': 'multipart/form-data'}
       })
           .then(() => {

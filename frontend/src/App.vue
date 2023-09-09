@@ -32,7 +32,7 @@ export default {
     },
     async setUserOnline(isOnline = false) {
       try {
-        await axios.patch(`http://127.0.0.1:8000/api/v1/account/${this.$store.state.username}/`, {is_online: isOnline})
+        await axios.patch(`http://127.0.0.1:8000/api/v1/account/${this.$store.state.username}/update/`, {is_online: isOnline})
             .then(() => {
             })
       } catch (error) {

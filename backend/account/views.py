@@ -4,17 +4,32 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import User
-from .serializers import UserSerializer, UserContactStatusSerializer
+from .serializers import UserSerializer, UserSimpleSerializer, UserContactsSerializer, UserContactStatusSerializer
 
 
 class UserListAPIView(generics.ListAPIView):
     queryset = User.objects.all()
+    serializer_class = UserSimpleSerializer
+
+
+class UserRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
+    lookup_field = 'username'
+    
+    def get_queryset(self):
+        queryset = User.objects.prefetch_related('following', 'followers').filter(username=self.kwargs['username'])
+        return queryset
 
 
-class UserRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+class UserProfileRetrieveAPIView(generics.RetrieveAPIView):
+    serializer_class = UserSimpleSerializer
+    lookup_field = 'username'
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+
+
+class UserUpdateAPIView(generics.UpdateAPIView):
+    serializer_class = UserSimpleSerializer
+    queryset = User.objects.all()
     lookup_field = 'username'
 
 
@@ -22,11 +37,11 @@ class UserNewFollowView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = 'username'
-
+    
     def create(self, request, *args, **kwargs):
         current_user = self.request.user
         follower_user = User.objects.get(id=request.data.get('following_id'))
-
+        
         if follower_user != current_user:
             if follower_user not in current_user.following.all():
                 current_user.following.add(follower_user)
@@ -61,7 +76,7 @@ class UserUnfollowView(generics.CreateAPIView):
 
 
 class UserContactManagementListAPIView(generics.ListAPIView):
-    serializer_class = UserSerializer
+    serializer_class = UserContactsSerializer
     
     def get_queryset(self):
         user = self.request.user
@@ -70,7 +85,7 @@ class UserContactManagementListAPIView(generics.ListAPIView):
 
 
 class UserContactListAPIView(generics.ListAPIView):
-    serializer_class = UserSerializer
+    serializer_class = UserContactsSerializer
     
     def get_queryset(self):
         user = self.request.user
@@ -91,5 +106,3 @@ def search_users(request):
         serializer = UserSerializer(users, many=True, context={'request': request})
         return Response(serializer.data)
     return Response({'users': []})
-
-
