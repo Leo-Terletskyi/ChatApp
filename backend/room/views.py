@@ -1,9 +1,13 @@
 from rest_framework import generics
+from rest_framework import permissions
 from .models import Message
 from .serializers import MessageSerializer
 
+from .permissions import IsMemberOfRoom
+
 
 class RoomMessagesListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated, IsMemberOfRoom]
     serializer_class = MessageSerializer
     lookup_field = 'name'
     

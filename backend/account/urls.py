@@ -8,10 +8,10 @@ urlpatterns = [
     path('contacts/', views.UserContactListAPIView.as_view()),
     path('contacts/online-status/', views.UserContactStatusListAPIView.as_view()),
     path('contact-management/', views.UserContactManagementListAPIView.as_view()),
+    path('new-follow/', views.UserNewFollowView.as_view()),
+    path('unfollow/', views.UserUnfollowView.as_view()),
     path('<str:username>/', views.UserRetrieveAPIView.as_view()),
     path('<str:username>/profile/', views.UserProfileRetrieveAPIView.as_view()),
     path('<str:username>/update/', views.UserUpdateAPIView.as_view()),
-    path('<str:username>/new-follow/', views.UserNewFollowView.as_view()),
-    path('<str:username>/unfollow/', views.UserUnfollowView.as_view()),
-    
+
 ]

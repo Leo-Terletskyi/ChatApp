@@ -129,7 +129,7 @@ export default {
           })
     },
     async addUser(user_id) {
-      await axios.post(`http://127.0.0.1:8000/api/v1/account/${this.currentUser.username}/new-follow/`, {'following_id': user_id})
+      await axios.post(`http://127.0.0.1:8000/api/v1/account/new-follow/`, {'following_id': user_id})
           .then((response) => {
             this.currentUser.following = response.data.following
           })
@@ -138,7 +138,7 @@ export default {
           })
     },
     async removeUser(user_id) {
-      await axios.post(`http://127.0.0.1:8000/api/v1/account/${this.currentUser.username}/unfollow/`, {'unfollow_id': user_id})
+      await axios.post(`http://127.0.0.1:8000/api/v1/account/unfollow/`, {'unfollow_id': user_id})
           .then((response) => {
             this.currentUser.following = response.data.following
           })

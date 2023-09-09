@@ -1,18 +1,22 @@
 from django.db.models import Q
 from rest_framework import generics, status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework import permissions
 
 from .models import User
+from .permissions import IsOwner
 from .serializers import UserSerializer, UserSimpleSerializer, UserContactsSerializer, UserContactStatusSerializer
 
 
 class UserListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSimpleSerializer
 
 
 class UserRetrieveAPIView(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
     serializer_class = UserSerializer
     lookup_field = 'username'
     
@@ -22,21 +26,23 @@ class UserRetrieveAPIView(generics.RetrieveAPIView):
 
 
 class UserProfileRetrieveAPIView(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
     serializer_class = UserSimpleSerializer
     lookup_field = 'username'
     queryset = User.objects.all()
 
 
 class UserUpdateAPIView(generics.UpdateAPIView):
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
     serializer_class = UserSimpleSerializer
     queryset = User.objects.all()
     lookup_field = 'username'
 
 
 class UserNewFollowView(generics.CreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    lookup_field = 'username'
     
     def create(self, request, *args, **kwargs):
         current_user = self.request.user
@@ -55,9 +61,9 @@ class UserNewFollowView(generics.CreateAPIView):
 
 
 class UserUnfollowView(generics.CreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    lookup_field = 'username'
     
     def create(self, request, *args, **kwargs):
         current_user = self.request.user
@@ -76,6 +82,7 @@ class UserUnfollowView(generics.CreateAPIView):
 
 
 class UserContactManagementListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserContactsSerializer
     
     def get_queryset(self):
@@ -85,6 +92,7 @@ class UserContactManagementListAPIView(generics.ListAPIView):
 
 
 class UserContactListAPIView(generics.ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserContactsSerializer
     
     def get_queryset(self):
@@ -94,10 +102,12 @@ class UserContactListAPIView(generics.ListAPIView):
 
 
 class UserContactStatusListAPIView(UserContactListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserContactStatusSerializer
 
 
 @api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
 def search_users(request):
     query = request.data.get('query', '')
     if query:
