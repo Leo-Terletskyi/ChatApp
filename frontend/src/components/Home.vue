@@ -1,7 +1,8 @@
 <template>
   <div class="main-absolute">
     <div class="columns is-mobile m-0 has-background-sp has-height-100">
-      <div class="column is-two-fifths-mobile is-two-fifths-tablet is-one-fifth-desktop is-one-fifth-fullhd is-one-fifth-widescreen">
+      <div class="column is-two-fifths-mobile is-two-fifths-tablet is-one-fifth-desktop is-one-fifth-fullhd is-one-fifth-widescreen p-1"
+           :class="{'display-none': !showContactsMenu}">
         <div class="main-content is-flex is-flex-direction-column">
           <div class="card-header has-background-fresh-oasis">
             <p class="card-header-title has-text-white">
@@ -10,7 +11,7 @@
           </div>
           <div class="card main-card flex-body has-invisible-scroll has-position-relative">
             <div class="card-content main-card p-2 main-absolute">
-              <div v-for="contact in contacts" :key="contact.id">
+              <div v-for="contact in filterContacts" :key="contact.id">
                 <div class="box p-1 my-2" @click="beforeWebsocket(contact.username)">
                   <article class="media">
                     <div class="media-left">
@@ -38,12 +39,7 @@
               <form @submit.prevent>
                 <div class="field has-addons">
                   <div class="control">
-                    <input class="input" type="text" v-model="searchUser" placeholder="Enter username">
-                  </div>
-                  <div class="control">
-                    <a type="submit" class="btn-grad-lightgreen m-0 inline-input-btn">
-                      Send
-                    </a>
+                    <input class="input" type="text" v-model="searchUser" placeholder="Find a contact">
                   </div>
                 </div>
               </form>
@@ -52,8 +48,24 @@
         </div>
       </div>
 
+      <div class="column p-1 show-contacts is-2-mobile is-1-tablet is-1-touch is-1-fullhd is-1-desktop is-1-widescreen"
+           :class="{'display-none': showContactsMenu}">
+        <div class="main-content">
+          <div class="button is-flex-direction-column flex-body has-background-fresh-oasis has-fz-20 show-contacts-btn p-0"
+               @click="showContactsMenu = !showContactsMenu">
+            <p>c</p>
+            <p>o</p>
+            <p>n</p>
+            <p>t</p>
+            <p>a</p>
+            <p>c</p>
+            <p>t</p>
+            <p>s</p>
+          </div>
+        </div>
+      </div>
 
-      <div class="column">
+      <div class="column p-1">
         <div class="main-content is-flex is-flex-direction-column">
           <div class="card-header has-background-phoenix-start">
             <p class="card-header-title has-text-white">
@@ -110,6 +122,7 @@ export default {
   name: "Home",
   data() {
     return {
+      showContactsMenu: true,
       chatSocket: {},
       searchUser: '',
       roomName: '',
@@ -159,6 +172,7 @@ export default {
       this.chatSocket = new WebSocket(`ws://127.0.0.1:8000/ws/${roomName}/?token=${localStorage.getItem('token')}&user2=${user2Username}`)
       this.chatSocket.onmessage = this.chatOnMessage
       this.chatSocket.onclose = this.chatClose
+      this.showContactsMenu = !this.showContactsMenu
     },
     async chatOnMessage(e) {
       const data = JSON.parse(e.data)
@@ -234,6 +248,11 @@ export default {
     chatScroll() {
       const elem = document.getElementById('chat')
       elem.scrollTop = elem.scrollHeight
+    }
+  },
+  computed: {
+    filterContacts() {
+      return this.contacts.filter(c => c.username.includes(this.searchUser))
     }
   }
 }

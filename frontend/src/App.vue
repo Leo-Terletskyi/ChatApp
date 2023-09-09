@@ -97,7 +97,7 @@ export default {
           <span class="ml-2">Contact management</span>
         </router-link>
 
-        <div class="navbar-item mr-3">
+        <div class="navbar-item">
           <form action="/user-search" method="get">
             <div class="field has-addons">
               <div class="control">
@@ -114,19 +114,19 @@ export default {
       </div>
 
       <div class="navbar-end">
-        <div class="navbar-item">
+        <div class="navbar-item pr-0 mr-2">
           <div class="buttons">
             <template v-if="!this.$store.state.isAuthenticated">
-              <router-link to="/sign-up" class="btn-grad-lightgreen">
+              <router-link to="/sign-up" class="btn-grad-lightgreen mt-0">
                 <strong>Sign up</strong>
               </router-link>
-              <router-link to="/login" class="btn-grad-lightblue">
+              <router-link to="/login" class="btn-grad-lightblue mt-0 mr-0">
                 Log in
               </router-link>
             </template>
 
             <template v-else>
-              <button class="btn-grad-rude auth-form-btn-style" @click="logOut">Logout</button>
+              <button class="btn-grad-rude auth-form-btn-style mt-0 mx-0" @click="logOut">Logout</button>
             </template>
           </div>
         </div>
@@ -139,7 +139,9 @@ export default {
   </div>
 
   <div class="main-footer has-text-centered">
-    footer
+    <p class="pt-1">
+      <a href="https://github.com/Leo-Terletskyi"> &#169; Leonid Terletskyi (2023)</a>
+    </p>
   </div>
 
 </template>

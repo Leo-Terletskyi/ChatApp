@@ -17,6 +17,16 @@ body {
     min-height: 100%;
 }
 
+.show-contacts {
+    flex: none;
+    width: 2%;
+}
+
+.show-contacts-btn {
+    border-bottom-right-radius: 90%;
+    border-top-right-radius: 90%;
+}
+
 .w-30 {
     min-width: 30%;
     max-width: 70%;
@@ -116,7 +126,7 @@ body {
     flex: 0 1 40px;
     padding: 5px 0 0 0;
     margin: 0 0 0 0;
-    background: lightgray;
+    background-image: radial-gradient( circle 343px at 46.3% 47.5%,  rgba(242,242,242,1) 0%, rgba(241,241,241,1) 72.9% );
 }
 
 .main-absolute {
@@ -161,12 +171,14 @@ body {
 
 .chat-contact-box {
     border-bottom-left-radius: 0;
-    background: rgba(255, 192, 0, 0.2)
+    background-image: radial-gradient( circle 489px at 49.3% 46.6%,  rgba(255,214,126,1) 0%, rgba(253,200,0,1) 100.2% );
+    box-shadow: -3px 5px 5px lightgray;
 }
 
 .chat-user-box {
     border-bottom-right-radius: 0;
-    background: rgba(0, 172, 255, 0.2)
+    background-image: linear-gradient( 180.7deg,  rgba(0,213,255,1) 2.5%, rgba(79,255,255,1) 97.7% );
+    box-shadow: -1px 6px 7px lightgray;
 }
 
 .display-none {
