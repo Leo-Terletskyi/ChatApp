@@ -46,7 +46,7 @@
         <button type="submit" class="btn-grad-lightgreen auth-form-btn-style mx-0 is-pulled-right">Submit</button>
 
       </form>
-      <router-link to="/log-in">
+      <router-link to="/login">
         <button type="button" class="btn-grad-lightblue auth-form-btn-style mx-0 is-pulled-left">
           Already have an account? Log in here.
         </button>
